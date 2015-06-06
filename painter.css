@@ -1,0 +1,33 @@
+.Stick{
+	border-width: 3px;
+	border-style: solid;
+	opacity: 1;
+
+
+}
+.Internal{
+	visibility: hidden;
+}
+ #s0,#s3,#s6{
+	height: 0px;
+	width: 20px;
+	margin: 5px 6px 5px 6px; 
+	padding:0;
+}
+#s1,#s2,#s4,#s5{
+	height: 20px;
+	width: 0px;
+	display: inline;
+	margin:6 0;
+	padding:0 0;
+}
+#ss{
+	width:22px;
+	display: inline-block;
+	margin: 0 0;
+	padding:0 0;
+	border-width:0px;
+}
+#DayOne{
+	visibility: visible;
+}
