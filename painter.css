@@ -1,13 +1,97 @@
+.External{
+	position: relative;
+
+	left:30%;
+	top:30%;
+	width:auto;
+}
+.internal{
+	display: inline-block;
+	background: #D1DBBD;
+	border-radius: 10%;
+}
+.DayAndDate{
+	display: inline-block;
+	padding-bottom: 25px;
+	border-bottom-style: inset;
+}
+.Day{
+	display: inline-block;
+	margin-right: 40px;
+	margin-left: 7px;
+}
+#DayOne{
+	display: inline-block;
+	margin-right: 5px;
+
+}
+#DayTwo{
+	display: inline-block;
+	margin-right: 5px;
+}
+#DayThree{
+	display: inline-block;
+}
+.Date{
+	display: inline-block;
+	margin-right: 7px;
+}
+#DateDayOne{
+	display: inline-block;
+	margin-right: 5px;
+}
+#DateDayTwo{
+	display: inline-block;
+	margin-right: 20px;
+}
+#DateMonthOne{
+	display: inline-block;
+	margin-right: 5px;
+}
+#DateMonthTwo{
+	display: inline-block;
+}
+.breaker{
+	width:0;
+}
+.time{
+	padding-top: 25px;
+	display: inline-block;
+}
+#HourOne{
+	display: inline-block;
+	margin-left: 50px;
+	margin-right: 5px;
+}
+#HourTwo{
+	display: inline-block;
+	margin-right: 20px;
+}
+#MinuteOne{
+	display: inline-block;
+	margin-right: 5px;
+}
+#MinuteTwo{
+	display: inline-block;
+	margin-right: 20px;
+}
+#SecondOne{
+	display: inline-block;
+	margin-right: 5px;
+}
+#SecondTwo{
+	display: inline-block;
+}
+
+
 .Stick{
 	border-width: 3px;
 	border-style: solid;
-	opacity: 1;
+	opacity: 0.1;
 
 
 }
-.Internal{
-	visibility: hidden;
-}
+
  #s0,#s3,#s6{
 	height: 0px;
 	width: 20px;
@@ -27,7 +111,4 @@
 	margin: 0 0;
 	padding:0 0;
 	border-width:0px;
-}
-#DayOne{
-	visibility: visible;
 }
