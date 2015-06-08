@@ -102,7 +102,7 @@ body{
 .Stick{
 	border-width: 3px;
 	border-style: solid;
-	opacity: 0.1;
+
 	border-color: #292929;
 
 
@@ -127,4 +127,7 @@ body{
 	margin: 0 0;
 	padding:0 0;
 	border-width:0px;
+}
+.Hidden{
+	opacity: 0.1;
 }
