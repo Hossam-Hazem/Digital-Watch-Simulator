@@ -15,7 +15,7 @@ $(document).ready(function(){
 
 })
 function updatewatch(){
-	if(init){
+
 	var currentdate = new Date(); 
 	Hour =currentdate.getHours();
 	Minute=currentdate.getMinutes();
@@ -33,8 +33,15 @@ function updatewatch(){
 	setSticks('DateMonthTwo',Month%10);
 	setSticks('DateDayOne',parseInt(Day/10));
 	setSticks('DateDayTwo',Day%10);
-	setTimeout(function(){unsetAll();updatewatch();}, Date.now()%1000);
+	var timeout=1000;
+	if(init){
+	 	timeout= Date.now()%1000;
+	 	init=false;
 	}
+
+	setTimeout(function(){unsetAll();updatewatch();},timeout );
+	
+	
 }
 function setSticks(parent,value){
 		if(value==0){
