@@ -15,7 +15,7 @@ $(document).ready(function(){
 
 })
 function updatewatch(){
-
+	if(init){
 	var currentdate = new Date(); 
 	Hour =currentdate.getHours();
 	Minute=currentdate.getMinutes();
@@ -33,18 +33,57 @@ function updatewatch(){
 	setSticks('DateMonthTwo',Month%10);
 	setSticks('DateDayOne',parseInt(Day/10));
 	setSticks('DateDayTwo',Day%10);
-	var timeout=1000;
-	if(init){
-	 	timeout= Date.now()%1000;
-	 	init=false;
+	 timeout= 1000-Date.now()%1000;
+	 init=false;
+	 setTimeout(function(){updatewatch();},timeout );
 	}
+	else{
+		 if(Hour==23&&Minute==59&&Second==59){
+		 	init=true;
+		 	updatewatch();
+		 }
+		 else{
+		 	if(Minute==59&&Second==59){
+		 		Hour++;
+		 		Minute=0;
+		 		Second=0;
+		 		setSticks('HourOne',parseInt(Hour/10));
+				setSticks('HourTwo',Hour%10);
+				setSticks('MinuteOne',parseInt(Minute/10));
+				setSticks('MinuteTwo',Minute%10);
+				setSticks('SecondOne',parseInt(Second/10));
+				setSticks('SecondTwo',Second%10);
+		 	}
+		 	else{
+		 		if(Second==59){
+		 			Minute++;
+		 			Second=0;
+		 			setSticks('MinuteOne',parseInt(Minute/10));
+					setSticks('MinuteTwo',Minute%10);
+					setSticks('SecondOne',parseInt(Second/10));
+					setSticks('SecondTwo',Second%10);
+		 		}
+		 		else{
+		 			Second++;
+		 			setSticks('SecondOne',parseInt(Second/10));
+					setSticks('SecondTwo',Second%10);
 
-	setTimeout(function(){unsetAll();updatewatch();},timeout );
+		 		}
+		 	}
+		 	setTimeout(function(){updatewatch();},1000 );
+		 }
+
+	}
+	
+
+
+
 	
 	
 }
 function setSticks(parent,value){
-		if(value==0){
+	unsetSticks(parent);
+	if(value==0){
 		setStick(parent,'0');
 		setStick(parent,'1');
 		setStick(parent,'2');
