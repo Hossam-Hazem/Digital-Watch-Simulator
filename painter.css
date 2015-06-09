@@ -1,28 +1,40 @@
 body{
-	background: #292929;
+	background: #2C3E50;
+	font-family: 'Raleway';
 }
+.WelcomeDiv{
+	width: 40%;
+	padding-bottom: 100px;
+	margin: 0 auto;
+	font-size: 80px;
+	color: #3498DB;
+	text-decoration: underline;
+}
+
 .External{
 	position: relative;
 	display: inline-block;
 	left:30%;
 	top:30%;
 	padding: 40px 40px;
-	background: #5B7876;
+	background: #E74C3C;
 	border-radius: 20%;
 }
 .Internal{
 	display: inline-block;
-	background: #8F9E8B;
+	background: #ECF0F1;
 }
 #Internal1{
 	border-top-left-radius: 10%;
 	border-top-right-radius: 10%;
+	padding-top: 20px;
 
 }
 #Internal2{
 	border-bottom-left-radius: 10%;
 	border-bottom-right-radius: 10%;
-	padding-right: 31px;
+	padding-right: 36px;
+	padding-bottom: 20px;
 }
 
 .DayAndDate{
@@ -102,23 +114,27 @@ body{
 .Stick{
 	border-width: 3px;
 	border-style: solid;
-
-	border-color: #292929;
-
+	border-color: #2980B9;
 
 }
 
- #s0,#s3,#s6{
+ #s0,#s6{
 	height: 0px;
-	width: 20px;
-	margin: 5px 6px 5px 6px; 
+	width: 25px;
+	margin: 0px 6px 0px 6px; 
+	padding:0;
+}
+#s3{
+	height: 0px;
+	width: 25px;
+	margin: 0px 6px 3px 6px; 
 	padding:0;
 }
 #s1,#s2,#s4,#s5{
-	height: 20px;
+	height: 25px ;
 	width: 0px;
-	display: inline;
-	margin:6 0;
+	display: inline-block;
+	margin:0 0;
 	padding:0 0;
 }
 #ss{
@@ -129,5 +145,5 @@ body{
 	border-width:0px;
 }
 .Hidden{
-	opacity: 0.1;
+	opacity: 0.05;
 }
