@@ -1,16 +1,20 @@
 body{
-	background: #2C3E50;
-	font-family: 'Raleway';
+	background: #2C3E50 !important;
+	font-family: 'Raleway' !important;
 }
 .WelcomeDiv{
 	width: 40%;
-	padding-bottom: 100px;
+	padding-bottom: 50px;
 	margin: 0 auto;
 	font-size: 80px;
 	color: #3498DB;
 	text-decoration: underline;
 }
-
+.SelectWatch{
+	width:15%;
+	margin: 0 auto;
+	padding-bottom: 50px;
+}
 .External{
 	position: relative;
 	display: inline-block;

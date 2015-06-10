@@ -6,15 +6,49 @@
 	var Day;
 	var DayName;
 	var init=true;
+	var breakwatch=false;
+	var breakstopwatch=false;	
+	var currentstate='Watch';
+	var sstate=0;
 $(document).ready(function(){
 	$('.Stick').addClass('Hidden');
 	updatewatch();
+	$('li').click(function(){
+		 var chosen = $(this).text();
+		 if(chosen==currentstate)
+		 	return;
+  		 if(chosen=='Watch'){
+  		 	breakstopwatch=true;
+  		 	 $('.repeatButton').addClass('invisible');
+  		 	$('.resetButton').addClass('invisible');
+  		 	$('.startButton').addClass('invisible');
+  		 	init =true;
+  		 	updatewatch();
+  		 	return;
+  		 }
+  		 if(chosen=='Stopwatch'){
+  		 	breakwatch=true;
+  		 	currentstate='Stopwatch';
+  		 	$('.repeatButton').removeClass('invisible');
+  		 	$('.resetButton').removeClass('invisible');
+  		 	$('.startButton').removeClass('invisible');
+  		 	unsetAll();
+  		 	init=true;
+  		 	Stopwatch();
 
+  		 }
+
+	})
 	
 
 
 })
 function updatewatch(){
+	console.log('watch')
+	if(breakwatch==true){
+		breakwatch=false;
+		return;
+	}
 	if(init){
 	var currentdate = new Date(); 
 	Hour =currentdate.getHours();
@@ -74,13 +108,144 @@ function updatewatch(){
 		 }
 
 	}
-	
+}	
 
+function Stopwatch(){
+		console.log('swatch')
+	if(breakstopwatch==true){
+		breakstopwatch=false;
+		return;
+	}
+	if(init){
+		Hour=0;
+		Minute=0;
+		Second=0;
+		setSticks('HourOne',parseInt(Hour/10));
+		setSticks('HourTwo',Hour%10);
+		setSticks('MinuteOne',parseInt(Minute/10));
+		setSticks('MinuteTwo',Minute%10);
+		setSticks('SecondOne',parseInt(Second/10));
+		setSticks('SecondTwo',Second%10);
+		init=false;
+		setTimeout(function(){Stopwatch();},1000);
+	}
+	else{
+		if(sstate==0){
+		 if(Hour==99&&Minute==59&&Second==99){
+		 	sstate=1;
+		 	Minute=39;
+		 	Hour=1;
+		 	Second=0;
+		 	setTimeout(function(){Stopwatch();},1000);
+		 }
+		 else{
+		 	if(Minute==59&&Second==99){
+		 		Hour++;
+		 		Minute=0;
+		 		Second=0;
+		 		setSticks('HourOne',parseInt(Hour/10));
+				setSticks('HourTwo',Hour%10);
+				setSticks('MinuteOne',parseInt(Minute/10));
+				setSticks('MinuteTwo',Minute%10);
+				setSticks('SecondOne',parseInt(Second/10));
+				setSticks('SecondTwo',Second%10);
+		 	}
+		 	else{
+		 		if(Second==99){
+		 			Minute++;
+		 			Second=0;
+		 			setSticks('MinuteOne',parseInt(Minute/10));
+					setSticks('MinuteTwo',Minute%10);
+					setSticks('SecondOne',parseInt(Second/10));
+					setSticks('SecondTwo',Second%10);
+		 		}
+		 		else{
+		 			Second++;
+		 			setSticks('SecondOne',parseInt(Second/10));
+					setSticks('SecondTwo',Second%10);
 
+		 		}
+		 	}
+		 	setTimeout(function(){Stopwatch();},10 );
+		 }
+		}
+		else{ 
+			if(sstate=1){
+					if(Hour==99&&Minute==59&&Second==59){
+		 				sstate=2;
+		 				Minute=3;
+		 				Hour=4;
+		 				Second=0;
+		 				setTimeout(function(){Stopwatch();},60000);
+		 			}
+				else{
+		 			if(Minute==59&&Second==59){
+		 				Hour++;
+		 				Minute=0;
+		 				Second=0;
+		 				setSticks('HourOne',parseInt(Hour/10));
+						setSticks('HourTwo',Hour%10);
+						setSticks('MinuteOne',parseInt(Minute/10));
+						setSticks('MinuteTwo',Minute%10);
+						setSticks('SecondOne',parseInt(Second/10));
+						setSticks('SecondTwo',Second%10);
+		 			}
+				 	else{
+				 		if(Second==59){
+				 			Minute++;
+				 			Second=0;
+				 			setSticks('MinuteOne',parseInt(Minute/10));
+							setSticks('MinuteTwo',Minute%10);
+							setSticks('SecondOne',parseInt(Second/10));
+							setSticks('SecondTwo',Second%10);
+				 		}
+				 		else{
+				 			Second++;
+				 			setSticks('SecondOne',parseInt(Second/10));
+							setSticks('SecondTwo',Second%10);
 
-	
-	
+				 		}
+				 	}
+				 	setTimeout(function(){Stopwatch();},1000 );
+				}
+			}
+			else{
+				if(Minute==59&&Second==59){
+		 				Hour++;
+		 				Minute=0;
+		 				Second=0;
+		 				setSticks('HourOne',parseInt(Hour/10));
+						setSticks('HourTwo',Hour%10);
+						setSticks('MinuteOne',parseInt(Minute/10));
+						setSticks('MinuteTwo',Minute%10);
+						setSticks('SecondOne',parseInt(Second/10));
+						setSticks('SecondTwo',Second%10);
+		 			}
+				 	else{
+				 		if(Second==59){
+				 			Minute++;
+				 			Second=0;
+				 			setSticks('MinuteOne',parseInt(Minute/10));
+							setSticks('MinuteTwo',Minute%10);
+							setSticks('SecondOne',parseInt(Second/10));
+							setSticks('SecondTwo',Second%10);
+				 		}
+				 		else{
+				 			Second++;
+				 			setSticks('SecondOne',parseInt(Second/10));
+							setSticks('SecondTwo',Second%10);
+
+				 		}
+				 	}
+				 	setTimeout(function(){Stopwatch();},60000 );
+			}	
+
+		}
+	}
+
 }
+
+
 function setSticks(parent,value){
 	unsetSticks(parent);
 	if(value==0){
