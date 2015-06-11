@@ -10,6 +10,7 @@
 	var breakstopwatch=false;	
 	var currentstate='Watch';
 	var sstate=0;
+	var begintime;
 $(document).ready(function(){
 	$('.Stick').addClass('Hidden');
 	updatewatch();
@@ -111,12 +112,12 @@ function updatewatch(){
 }	
 
 function Stopwatch(){
-		console.log('swatch')
 	if(breakstopwatch==true){
 		breakstopwatch=false;
 		return;
 	}
 	if(init){
+		begintime= new Date(); 
 		Hour=0;
 		Minute=0;
 		Second=0;
@@ -136,12 +137,16 @@ function Stopwatch(){
 		 	Minute=39;
 		 	Hour=1;
 		 	Second=0;
-		 	setTimeout(function(){Stopwatch();},1000);
+		 	setTimeout(function(){Stopwatch();},100);
 		 }
 		 else{
 		 	if(Minute==59&&Second==99){
 		 		Hour++;
-		 		Minute=0;
+		 		var currenttime =new Date()
+		 		Minute=parseInt(((currenttime-begintime)/1000)%60);
+		 		console.log('currenttime = '+currenttime)
+		 		console.log('begintime = '+begintime)
+		 		console.log('M = '+Minute)
 		 		Second=0;
 		 		setSticks('HourOne',parseInt(Hour/10));
 				setSticks('HourTwo',Hour%10);
@@ -160,13 +165,13 @@ function Stopwatch(){
 					setSticks('SecondTwo',Second%10);
 		 		}
 		 		else{
-		 			Second++;
+		 			Second=Second+11;
 		 			setSticks('SecondOne',parseInt(Second/10));
 					setSticks('SecondTwo',Second%10);
 
 		 		}
 		 	}
-		 	setTimeout(function(){Stopwatch();},10 );
+		 	setTimeout(function(){Stopwatch();},100 );
 		 }
 		}
 		else{ 
@@ -183,6 +188,8 @@ function Stopwatch(){
 		 				Hour++;
 		 				Minute=0;
 		 				Second=0;
+		 				var currenttime =new Date()
+		 				Second=parseInt(((currenttime-begintime)/1000)%60);
 		 				setSticks('HourOne',parseInt(Hour/10));
 						setSticks('HourTwo',Hour%10);
 						setSticks('MinuteOne',parseInt(Minute/10));
@@ -255,38 +262,38 @@ function setSticks(parent,value){
 		setStick(parent,'4');
 		setStick(parent,'5');
 		setStick(parent,'6');
-	}
+	}else {
 	if(value==1){
 		setStick(parent,'2');
 		setStick(parent,'5');
-	}
+	}else {
 	if(value==2){
 		setStick(parent,'0');
 		setStick(parent,'2');
 		setStick(parent,'3');
 		setStick(parent,'4');
 		setStick(parent,'6');
-	}
+	}else {
 	if(value==3){
 		setStick(parent,'0');
 		setStick(parent,'2');
 		setStick(parent,'3');
 		setStick(parent,'5');
 		setStick(parent,'6');
-	}
+	}else {
 	if(value==4){
 		setStick(parent,'1');
 		setStick(parent,'2');
 		setStick(parent,'3');
 		setStick(parent,'5');
-	}
+	}else {
 	if(value==5){
 		setStick(parent,'0');
 		setStick(parent,'1');
 		setStick(parent,'3');
 		setStick(parent,'5');
 		setStick(parent,'6');
-	}
+	}else {
 	if(value==6){
 		setStick(parent,'0');
 		setStick(parent,'1');
@@ -294,12 +301,12 @@ function setSticks(parent,value){
 		setStick(parent,'4');
 		setStick(parent,'5');
 		setStick(parent,'6');
-	}
+	}else{
 	if(value==7){
 		setStick(parent,'0');
 		setStick(parent,'2');
 		setStick(parent,'5');
-	}
+	}else{
 	if(value==8){
 		setStick(parent,'0');
 		setStick(parent,'1');
@@ -308,8 +315,7 @@ function setSticks(parent,value){
 		setStick(parent,'4');
 		setStick(parent,'5');
 		setStick(parent,'6');
-	}
-	if(value==9){
+	}else{
 		setStick(parent,'0');
 		setStick(parent,'1');
 		setStick(parent,'2');
@@ -317,6 +323,14 @@ function setSticks(parent,value){
 		setStick(parent,'5');
 		setStick(parent,'6');
 	}
+	}
+	}	
+	}
+	}
+	}
+	}
+	}
+}
 		
 
 }
