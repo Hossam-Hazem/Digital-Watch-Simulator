@@ -1,149 +1,91 @@
 
-	var Hour;
-	var Minute;
-	var Second;
-	var Month;
-	var Day;
-	var DayName;
-	var init=true;
 	var breakwatch=false;
 	var breakstopwatch=false;	
 	var currentstate='Watch';
 	var sstate=0;
-	var begintime;
+	var thread;
 $(document).ready(function(){
+		var Hour = 0
+		var Minute=0
+		var Second =0
+		var sstate=0
 	$('.Stick').addClass('Hidden');
-	updatewatch();
+	$('.Reset').addClass('invisible');
+	$('.StartPause').addClass('invisible');
+	updatewatch(0,0,0,0,0,'DayName',true);
 	$('li').click(function(){
 		 var chosen = $(this).text();
 		 if(chosen==currentstate)
 		 	return;
   		 if(chosen=='Watch'){
-  		 	breakstopwatch=true;
-  		 	 $('.repeatButton').addClass('invisible');
-  		 	$('.resetButton').addClass('invisible');
-  		 	$('.startButton').addClass('invisible');
+  		 	clearTimeout(thread);
+  		 	thread=null;
+  		 	currentstate='Watch';
+  		 	$('.Reset').addClass('invisible');
+  		 	$('.StartPause').addClass('invisible');
   		 	init =true;
-  		 	updatewatch();
+  		 	updatewatch(0,0,0,0,0,'DayName',init);
   		 	return;
   		 }
   		 if(chosen=='Stopwatch'){
-  		 	breakwatch=true;
-  		 	currentstate='Stopwatch';
-  		 	$('.repeatButton').removeClass('invisible');
-  		 	$('.resetButton').removeClass('invisible');
-  		 	$('.startButton').removeClass('invisible');
   		 	unsetAll();
-  		 	init=true;
-  		 	Stopwatch();
-
+  		 	clearTimeout(thread);
+  		 	thread=null;
+  		 	currentstate='Stopwatch';
+  		 	$('.Reset').removeClass('invisible');
+  		 	$('.StartPause').removeClass('invisible');
+  		 	setSticks('HourOne',0);
+			setSticks('HourTwo',0);
+			setSticks('MinuteOne',0);
+			setSticks('MinuteTwo',0);
+			setSticks('SecondOne',0);
+			setSticks('SecondTwo',0);
   		 }
 
 	})
 	
+	$('.StartPause').click(function(){
+		 var chosen = $(this).text();
+		if(chosen=='pause'){
+				clearTimeout(thread);
+				$(this).text('start');
+		}
+		else{
+			Stopwatch();
+			$(this).text('pause');
+		}
+	});
+	$('.Reset').click(function(){
+		unsetAll();
+		Hour = 0
+		Minute=0
+		Second =0
+		sstate=0
+		setSticks('HourOne',0);
+		setSticks('HourTwo',0);
+		setSticks('MinuteOne',0);
+		setSticks('MinuteTwo',0);
+		setSticks('SecondOne',0);
+		setSticks('SecondTwo',0);
 
+	});
+	function Stopwatch(){
+	
 
-})
-function updatewatch(){
-	console.log('watch')
-	if(breakwatch==true){
-		breakwatch=false;
-		return;
-	}
-	if(init){
-	var currentdate = new Date(); 
-	Hour =currentdate.getHours();
-	Minute=currentdate.getMinutes();
-	Second=currentdate.getSeconds();
-	Month=currentdate.getMonth()+1;
-	Day = currentdate.getDate();
-	DayName=currentdate.getDay();
-	setSticks('HourOne',parseInt(Hour/10));
-	setSticks('HourTwo',Hour%10);
-	setSticks('MinuteOne',parseInt(Minute/10));
-	setSticks('MinuteTwo',Minute%10);
-	setSticks('SecondOne',parseInt(Second/10));
-	setSticks('SecondTwo',Second%10);
-	setSticks('DateMonthOne',parseInt(Month/10));
-	setSticks('DateMonthTwo',Month%10);
-	setSticks('DateDayOne',parseInt(Day/10));
-	setSticks('DateDayTwo',Day%10);
-	 timeout= 1000-Date.now()%1000;
-	 init=false;
-	 setTimeout(function(){updatewatch();},timeout );
-	}
-	else{
-		 if(Hour==23&&Minute==59&&Second==59){
-		 	init=true;
-		 	updatewatch();
-		 }
-		 else{
-		 	if(Minute==59&&Second==59){
-		 		Hour++;
-		 		Minute=0;
-		 		Second=0;
-		 		setSticks('HourOne',parseInt(Hour/10));
-				setSticks('HourTwo',Hour%10);
-				setSticks('MinuteOne',parseInt(Minute/10));
-				setSticks('MinuteTwo',Minute%10);
-				setSticks('SecondOne',parseInt(Second/10));
-				setSticks('SecondTwo',Second%10);
-		 	}
-		 	else{
-		 		if(Second==59){
-		 			Minute++;
-		 			Second=0;
-		 			setSticks('MinuteOne',parseInt(Minute/10));
-					setSticks('MinuteTwo',Minute%10);
-					setSticks('SecondOne',parseInt(Second/10));
-					setSticks('SecondTwo',Second%10);
-		 		}
-		 		else{
-		 			Second++;
-		 			setSticks('SecondOne',parseInt(Second/10));
-					setSticks('SecondTwo',Second%10);
-
-		 		}
-		 	}
-		 	setTimeout(function(){updatewatch();},1000 );
-		 }
-
-	}
-}	
-
-function Stopwatch(){
-	if(breakstopwatch==true){
-		breakstopwatch=false;
-		return;
-	}
-	if(init){
-		begintime= new Date(); 
-		Hour=0;
-		Minute=0;
-		Second=0;
-		setSticks('HourOne',parseInt(Hour/10));
-		setSticks('HourTwo',Hour%10);
-		setSticks('MinuteOne',parseInt(Minute/10));
-		setSticks('MinuteTwo',Minute%10);
-		setSticks('SecondOne',parseInt(Second/10));
-		setSticks('SecondTwo',Second%10);
-		init=false;
-		setTimeout(function(){Stopwatch();},1000);
-	}
-	else{
 		if(sstate==0){
 		 if(Hour==99&&Minute==59&&Second==99){
 		 	sstate=1;
 		 	Minute=39;
 		 	Hour=1;
 		 	Second=0;
-		 	setTimeout(function(){Stopwatch();},100);
+		 	thread=setTimeout(function(){Stopwatch();},100);
 		 }
 		 else{
 		 	if(Minute==59&&Second==99){
 		 		Hour++;
-		 		var currenttime =new Date()
-		 		Minute=parseInt(((currenttime-begintime)/1000)%60);
+		 		//var currenttime =new Date()
+		 		//Minute=parseInt(((currenttime-begintime)/1000)%60);
+		 		Minute=0;
 		 		console.log('currenttime = '+currenttime)
 		 		console.log('begintime = '+begintime)
 		 		console.log('M = '+Minute)
@@ -165,13 +107,13 @@ function Stopwatch(){
 					setSticks('SecondTwo',Second%10);
 		 		}
 		 		else{
-		 			Second=Second+11;
+		 			Second=Second+1;
 		 			setSticks('SecondOne',parseInt(Second/10));
 					setSticks('SecondTwo',Second%10);
 
 		 		}
 		 	}
-		 	setTimeout(function(){Stopwatch();},100 );
+		 	thread=setTimeout(function(){Stopwatch();},9.85 );
 		 }
 		}
 		else{ 
@@ -213,7 +155,7 @@ function Stopwatch(){
 
 				 		}
 				 	}
-				 	setTimeout(function(){Stopwatch();},1000 );
+				 	thread=setTimeout(function(){Stopwatch();},1000 );
 				}
 			}
 			else{
@@ -244,13 +186,79 @@ function Stopwatch(){
 
 				 		}
 				 	}
-				 	setTimeout(function(){Stopwatch();},60000 );
+				 	thread=setTimeout(function(){Stopwatch();},60000 );
 			}	
 
 		}
-	}
-
+	
 }
+
+})
+function updatewatch(Hour,Minute,Second,Month,Day,DayName,init){
+
+
+	if(init){
+	var currentdate = new Date(); 
+	Hour =currentdate.getHours();
+	Minute=currentdate.getMinutes();
+	Second=currentdate.getSeconds();
+	Month=currentdate.getMonth()+1;
+	Day = currentdate.getDate();
+	DayName=currentdate.getDay();
+	setSticks('HourOne',parseInt(Hour/10));
+	setSticks('HourTwo',Hour%10);
+	setSticks('MinuteOne',parseInt(Minute/10));
+	setSticks('MinuteTwo',Minute%10);
+	setSticks('SecondOne',parseInt(Second/10));
+	setSticks('SecondTwo',Second%10);
+	setSticks('DateMonthOne',parseInt(Month/10));
+	setSticks('DateMonthTwo',Month%10);
+	setSticks('DateDayOne',parseInt(Day/10));
+	setSticks('DateDayTwo',Day%10);
+	 timeout= 1000-Date.now()%1000;
+	 init=false;
+	thread= setTimeout(function(){updatewatch(Hour,Minute,Second,Month,Day,DayName,init);},timeout );
+	}
+	else{
+		 if(Hour==23&&Minute==59&&Second==59){
+		 	init=true;
+		 	updatewatch(Hour,Minute,Second,Month,Day,DayName,init);
+		 }
+		 else{
+		 	if(Minute==59&&Second==59){
+		 		Hour++;
+		 		Minute=0;
+		 		Second=0;
+		 		setSticks('HourOne',parseInt(Hour/10));
+				setSticks('HourTwo',Hour%10);
+				setSticks('MinuteOne',parseInt(Minute/10));
+				setSticks('MinuteTwo',Minute%10);
+				setSticks('SecondOne',parseInt(Second/10));
+				setSticks('SecondTwo',Second%10);
+		 	}
+		 	else{
+		 		if(Second==59){
+		 			Minute++;
+		 			Second=0;
+		 			setSticks('MinuteOne',parseInt(Minute/10));
+					setSticks('MinuteTwo',Minute%10);
+					setSticks('SecondOne',parseInt(Second/10));
+					setSticks('SecondTwo',Second%10);
+		 		}
+		 		else{
+		 			Second++;
+		 			setSticks('SecondOne',parseInt(Second/10));
+					setSticks('SecondTwo',Second%10);
+
+		 		}
+		 	}
+		 	thread=setTimeout(function(){updatewatch(Hour,Minute,Second,Month,Day,DayName,init);},1000 );
+		 }
+
+	}
+}	
+
+
 
 
 function setSticks(parent,value){

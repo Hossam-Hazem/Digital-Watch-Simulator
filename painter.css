@@ -151,3 +151,10 @@ body{
 .Hidden{
 	opacity: 0.05;
 }
+.Buttondiv{
+	margin:0 auto;
+	width: 40%;
+}
+.StartPause{
+	margin-right: 50px;
+}
