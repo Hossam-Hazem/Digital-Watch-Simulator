@@ -64,8 +64,10 @@ body{
 	display: inline-block;
 }
 .Date{
+	padding-left: 100px;
 	display: inline-block;
 	margin-right: 7px;
+	padding-right: 93.578;
 }
 #DateDayOne{
 	display: inline-block;
@@ -122,6 +124,7 @@ body{
 
 }
 
+
  #s0,#s6{
 	height: 0px;
 	width: 25px;
@@ -141,6 +144,7 @@ body{
 	margin:0 0;
 	padding:0 0;
 }
+
 #ss{
 	width:22px;
 	display: inline-block;

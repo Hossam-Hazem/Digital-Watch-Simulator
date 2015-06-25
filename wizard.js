@@ -9,7 +9,7 @@ $(document).ready(function(){
 		var Minute=0
 		var Second =0
 		var sstate=0
-	$('.Stick').addClass('Hidden');
+	
 	$('.Reset').addClass('invisible');
 	$('.StartPause').addClass('invisible');
 	updatewatch(0,0,0,0,0,'DayName',true);
@@ -323,13 +323,14 @@ function setSticks(parent,value){
 		setStick(parent,'4');
 		setStick(parent,'5');
 		setStick(parent,'6');
-	}else{
+	}else{if(value==9){
 		setStick(parent,'0');
 		setStick(parent,'1');
 		setStick(parent,'2');
 		setStick(parent,'3');
 		setStick(parent,'5');
 		setStick(parent,'6');
+	}
 	}
 	}
 	}	
@@ -343,9 +344,7 @@ function setSticks(parent,value){
 
 }
 function unsetAll(){
-	unsetSticks('DayOne');
-	unsetSticks('DayTwo');
-	unsetSticks('DayThree');
+
 	unsetSticks('DateDayOne');
 	unsetSticks('DateDayTwo');
 	unsetSticks('DateMonthOne');
